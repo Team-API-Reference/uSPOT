@@ -1,0 +1,23 @@
+{
+  "name": "arp",
+  "version": "1.0.0",
+  "description": "API Reference Product",
+  "main": "index.js",
+  "scripts": {
+    "start": "cross-env NODE_ENV=production node server/server.js",
+    "build": "cross-env NODE_ENV=production webpack",
+    "dev": "concurrently \"cross-env NODE_ENV=development webpack serve\" \"cross-env NODE_ENV=development node server/server.js\"",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Team-API-Reference/ARP.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Team-API-Reference/ARP/issues"
+  },
+  "homepage": "https://github.com/Team-API-Reference/ARP#readme"
+}
