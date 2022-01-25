@@ -13,7 +13,7 @@ app.use(cookieParser());
 if (process.env.NODE_ENV === 'production') {
     app.get('/',
       (req, res) => {
-        res.sendFile(path.resolve(__dirname, '../index.html'));
+        res.status(200).sendFile(path.resolve(__dirname, '../index.html'));
       }
     );
   
