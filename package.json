@@ -7,7 +7,7 @@
     "start": "cross-env NODE_ENV=production node server/server.js",
     "build": "cross-env NODE_ENV=production webpack",
     "dev": "concurrently \"cross-env NODE_ENV=development webpack serve\" \"cross-env NODE_ENV=development node server/server.js\"",
-    "test": "jest"
+    "test": "jest --verbose"
   },
   "repository": {
     "type": "git",
@@ -32,6 +32,8 @@
     "express": "^4.17.1",
     "jest": "^27.4.7",
     "pg": "^8.7.1",
+    "@testing-library/react": "^11.2.5",
+    "@wojtekmaj/enzyme-adapter-react-17": "^0.4.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "supertest": "^6.2.2",

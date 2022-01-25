@@ -1,13 +1,13 @@
 import React from 'react';
+import YoutubeUrl from './containers/youtubeUrl.jsx';
 
-class App extends React.Component {
-  render() {
-    return(
+const App = () => {
+    return (
       <div> 
-      <h1>Click here to catch COVID 19 today!</h1>
+      <h1>Uspot: The Music Tracking App</h1>
+      <YoutubeUrl />
       </div>
     );
-  }
 }
 
 export default App;
