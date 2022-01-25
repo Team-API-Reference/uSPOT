@@ -5,18 +5,17 @@ const db = require("../server/models/userModel.js");
 
 const server = "http://localhost:3000";
 const queryResetDB =
-`DROP TABLE entry, users; 
-CREATE TABLE users (
-  id SERIAL NOT NULL PRIMARY KEY, 
-  username VARCHAR UNIQUE, 
-  passcode VARCHAR, 
-  session_id uuid); 
-CREATE TABLE entry (
-  id SERIAL NOT NULL,  
-  url VARCHAR,
-  user_id INT REFERENCES users,
-  entry_password VARCHAR
-);`;
+`DROP TABLE records, users; 
+CREATE TABLE users(
+  username  VARCHAR(100) PRIMARY KEY,
+  passcode  VARCHAR(100) NOT NULL,
+  session_id uuid
+); 
+  CREATE TABLE records(
+    youtubeurl  VARCHAR(100) PRIMARY KEY,
+    spotifyid  VARCHAR(100) NOT NULL,
+    username VARCHAR(100) REFERENCES users (username)
+  );`;
 /**
  * Read the docs! https://www.npmjs.com/package/supertest
  */
@@ -39,30 +38,6 @@ xdescribe("Route integration", () => {
           .get("/")
           .expect("Content-Type", /text\/html/)
           .expect(200);
-      });
-    });
-  });
-
-  //test the route, then check the json object on the response
-  xdescribe("/api/getAllEntries", () => {
-    xdescribe("GET", () => {
-      xit("responds with 200 status and application/json content type", () => {
-        return request(server)
-          .get("/api/getAllEntries")
-          .query({userID: 1})
-          .expect("Content-Type", /json/)
-          .expect(200);
-      });
-
-      xit('parses an array from the response to getAllEntries', () => {
-        return request(server)
-          .get("/api/getAllEntries")
-          .query({userID: 1})
-          .expect("Content-Type", /json/)
-          .expect(200)
-          .then((res) => {
-            expect(Array.isArray(res.body)).toEqual(true);
-          });
       });
     });
   });
