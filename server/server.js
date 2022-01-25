@@ -10,15 +10,15 @@ app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use(cookieParser());
 
-// if (process.env.NODE_ENV === 'production') {
-//     app.get('/',
-//       (req, res) => {
-//         res.sendFile(path.resolve(__dirname, '../index.html'));
-//       }
-//     );
+if (process.env.NODE_ENV === 'production') {
+    app.get('/',
+      (req, res) => {
+        res.sendFile(path.resolve(__dirname, '../index.html'));
+      }
+    );
   
-//     app.use('/build', express.static(path.resolve(__dirname, '../build')))
-//   }
+    app.use('/build', express.static(path.resolve(__dirname, '../build')))
+  }
   
 
 app.use('/api', apiRouter);
