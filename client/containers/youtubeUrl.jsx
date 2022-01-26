@@ -55,10 +55,9 @@ export default function YoutubeUrl() {
         <div>
             {/* <box style={{ display: 'flex' }}> */}
             <div className="flex-container">
-            <form action='api/addEntry' method="POST">
+            <form className="flex-form" action='api/addEntry' method="POST">
                 <input id = 'youtubeurl' placeholder='put Youtube URL here...'></input>
                 <button id='youTubeURLButton'>Save URL to DB</button>
-                {/* <br /> */}
                 <input id = 'spotifyid' placeholder="song info"></input>
                 <button id='spotifyButton'>Like Song on Spotify</button>
             </form>
