@@ -22,7 +22,7 @@ router.post("/auth", (req, res) => {
       refreshToken: data.body.refresh_token,
       expiresIn: data.body.expires_in
     })
-  }).catch(() => {
+  }).catch((err) => {
     console.log(err);
     res.sendStatus(400);
   })
@@ -122,7 +122,7 @@ router.get("/", (req, res) => {
   });
 
   router.get("/getAllEntries", 
-  recordController.authorizeSession,
+//   recordController.authorizeSession,
   recordController.getrecords,
   (req, res) => {
     return res.status(200).json(res.locals.records);
@@ -130,7 +130,7 @@ router.get("/", (req, res) => {
 
 router.post("/addEntry", 
   //call controller here: 
-  recordController.authorizeSession,
+//   recordController.authorizeSession,
   recordController.postrecords,
   (req, res) => {
   return res.status(200).json();
