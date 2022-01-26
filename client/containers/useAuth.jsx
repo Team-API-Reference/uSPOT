@@ -13,7 +13,7 @@ export default function useAuth(code) {
             code,
         })
         .then(res => {
-            console.log(res)
+            console.log(res.data.accessToken)
             setAccessToken(res.data.accessToken)
             setrefreshToken(res.data.refreshToken)
             setExpiresIn(res.data.expiresIn)
