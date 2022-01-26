@@ -1,15 +1,21 @@
 const express = require ('express');
 const cookieParser = require('cookie-parser');
-const app = express ();
 const process = require('process');
 const path = require('path');
 const apiRouter = require('./routes/api');
 const PORT = 3000;
-
+const cors = require('cors');
+const bodyParser = require('body-parser');
+const fs = require('fs');
+const dotenv = require('dotenv');
+// import SpotifyWebApi from'spotify-web-api-node';
+const app = express ();
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use(cookieParser());
-
+app.use(cors());
+app.use(bodyParser.json());
+dotenv.config();
 if (process.env.NODE_ENV === 'production') {
     app.get('/',
       (req, res) => {

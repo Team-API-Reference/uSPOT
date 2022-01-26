@@ -27,7 +27,6 @@ export default function UserLogin(props) {
     return (
         <div>
             <input type="text" placeholder='Username' id="username" onChange= {(event) => {setUsername(event.target.value) }}></input>
-            <br/>
             <input type="text" placeholder='Password' id="password" onChange={(event) => {setPassword(event.target.value) }}></input>
             <button onClick={() => { handleSubmit(username, password) }}>Login</button>
             <button>Signout</button>
