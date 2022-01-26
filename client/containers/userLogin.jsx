@@ -6,9 +6,9 @@ export default function UserLogin() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 
-    function handleSubmit(username, password){
+    async function handleSubmit(username, password){
         //send fetch request with username and password
-        fetch('/api/login', {
+        await fetch('/api/login', {
           method: 'POST',
           body: JSON.stringify({ username: username, password: password}),
           headers: { 'Content-Type': 'application/json' },

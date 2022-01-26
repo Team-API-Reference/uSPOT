@@ -17,7 +17,7 @@ module.exports = {
     new MiniCssExtractPlugin(),
   ],
   devServer: {
-    proxy: {'/api': 'http://localhost:3000'},
+    proxy: {'*': 'http://localhost:8080/*'}
   },
   module: {
     rules: [

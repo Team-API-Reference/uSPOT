@@ -5,11 +5,18 @@ import UserLogin from './userLogin.jsx';
 export default function YoutubeUrl() {
     const [feedback, setFeedback] = useState('');
 
-
-
-
-    function spotifyHandler() {
-        
+    const spotifyHandler =  () => {
+        // window.open('http://localhost:8080/api/auth', '_self')
+        fetch ('http://localhost:8080/api/auth', {
+            method: 'GET',
+            // headers: {
+            // 'Content-Type': 'application/json',
+            // }
+        })
+        .then((data) => {
+            console.log ('data received', data)
+                return data
+            })
     }
 
     return (
