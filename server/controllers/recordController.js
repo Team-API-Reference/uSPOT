@@ -161,4 +161,29 @@ recordController.authorizeSessionForrecord = (req, res, next) => {
     });
 };
 
+ recordController.triggerAPI = (req, res, next) => {
+   
+ };
+
+async function findSongs(token, search_query) {
+
+  let result = await api.request({
+      method: "get",
+      url: "https://api.spotify.com/v1/search",
+      headers: { 'Authorization': 'Bearer ' + token },
+      params: { 'q': search_query, 'type': 'track' }
+  }).catch(async function handleError(err) {
+      console.log(err)
+      let refreshed_token = await refreshToken(username)
+      let result_new = await findSongs(username, refreshed_token, search_query)
+      console.log(result_new)
+      setFeedback(result_new);
+      return result_new.data.tracks
+
+  })
+  return result.data.tracks
+
+}
+
+
 module.exports = recordController;
