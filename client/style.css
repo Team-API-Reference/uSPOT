@@ -8,8 +8,8 @@
 }
 
 body {
-    align-items: center;
     display: flex;
+    align-items: center;
     flex-direction: column;
     box-sizing: border-box;
     min-height: 100vh;
@@ -22,8 +22,8 @@ h1 {
 }
 
 .flex-container {
-    align-items: center;
     display: flex;
+    align-items: center;
     flex-direction: column;
     box-sizing: border-box;
     /* flex-wrap: nowrap; */
@@ -31,7 +31,27 @@ h1 {
     /* background-color: rgb(107, 169, 226); */
 }
 
+.flex-form {
+    height: 50px;
+    width: 275px;
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    align-content: center;
+    flex-direction: row;
+    margin: auto;
+    flex-grow: 1;
+}
+.flex-form > button {
+    display: flex;
+    flex-direction: column;
+    align-content: flex-end;
+    flex-wrap: nowrap;
+    background-color: rgb(87, 161, 116);
+}
 .flex-container > div {
+    display: flex;
+    flex-direction: column;
     background-color: #4f0404;
     width: 80%;
     height: 100%;
@@ -39,9 +59,22 @@ h1 {
     text-align: center;
     line-height: 75px;
     font-size: 30px;
-    /* align-self: center; */
+    align-self: center; 
 }
-
+.flex-container > button {
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+    justify-content: center;
+    background-color: #88d0f1;
+    width: 35%;
+    height: 25%;
+    margin: 5px;
+    /* align-items: flex-end; */
+    flex-wrap: wrap;
+    font-size: 15px;
+}
+/*
 .flex-container > form {
     background-color: #916464;
     
@@ -57,7 +90,7 @@ h1 {
     background-color: #ffffff;
     text-align: flex-left;
     flex-wrap: wrap;
-}
+} */
 
 /* .flex-container > form > button {
     /* align-self: flex-end; */
