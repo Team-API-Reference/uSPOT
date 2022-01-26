@@ -1,4 +1,5 @@
 import React from 'react';
+import "./style.css";
 import YoutubeUrl from './containers/youtubeUrl.jsx';
 
 const App = () => {

@@ -31,6 +31,7 @@
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "jest": "^27.4.7",
+    "node-fetch": "^2.6.6",
     "pg": "^8.7.1",
     "@testing-library/react": "^11.2.5",
     "@wojtekmaj/enzyme-adapter-react-17": "^0.4.1",

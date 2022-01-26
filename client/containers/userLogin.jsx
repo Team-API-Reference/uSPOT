@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-export default function UserLogin() {
-
+export default function UserLogin(props) {
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
@@ -13,6 +12,16 @@ export default function UserLogin() {
           body: JSON.stringify({ username: username, password: password}),
           headers: { 'Content-Type': 'application/json' },
         })
+        // .then((data) => {console.log(data);})
+        .then((data) => {
+          if (data.status === 500) {
+            props.setFeedback('Login Failure: Invalid credentials') 
+          }
+            else {
+              props.setFeedback('Login successful!')
+            }
+        })
+        .catch((err) => {console.log(err);setFeedback('Error: Invalid credentials')});
       }
 
     return (
