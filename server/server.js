@@ -19,7 +19,6 @@ if (process.env.NODE_ENV === 'production') {
   
     app.use('/build', express.static(path.resolve(__dirname, '../build')))
   }
-  
 
 app.use('/api', apiRouter);
 
