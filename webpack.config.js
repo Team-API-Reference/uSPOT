@@ -1,9 +1,13 @@
 const process = require('process');
 const path = require('path');
-
+const fs = require('fs');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const cookieParser = require('cookie-parser');
+// const webpack = require('webpack')
+
+// const dotenv = require('dotenv');
+// dotenv.config();
 
 module.exports = {
   mode: process.env.NODE_ENV || 'production',
@@ -17,12 +21,15 @@ module.exports = {
     new MiniCssExtractPlugin(),
   ],
   devServer: {
-    proxy: {'/api': 'http://localhost:3000'},
+    proxy: {'/api': 'http://localhost:3000/*'},
+    static: {
+      directory: './build'
+    },
   },
   module: {
     rules: [
       {
-        test: /\.jsx?$/i,
+        test: /\.js(x)?$/i,
         exclude: /node_modules/,
         loader: 'babel-loader',
         options: {
@@ -45,4 +52,10 @@ module.exports = {
       },
     ],
   },
+  resolve: {
+    extensions: ['.tsx', '.ts', '.js', '.jsx'],
+    fallback: {
+        "fs": false
+    },
+  }
 };

@@ -1,27 +1,71 @@
 const express = require('express');
 const userController = require('../controllers/userController');
 const recordController = require('../controllers/recordController');
-import fetch from 'node-fetch';
-
-require('dotenv').config();
+const SpotifyWebApi = require('spotify-web-api-node');
 //import controllers here
-
+const fs = require('fs');
+const dotenv = require('dotenv');
+dotenv.config();
 const router = new express.Router();
 
-router.get("/auth", (req, res) => {
-  const state = generateRandomString(16);
-  const scope = 'user-read-private';
-  console.log ('router.get/auth let the request begin');
+router.post("/auth", (req, res) => {
+  const code = req.body.code;
+  console.log('working')
+  const spotifyApi = new SpotifyWebApi({
+    redirectUri: 'http://localhost:8080',
+    clientId: `${process.env.SPOTIFY_CLIENT_ID}`,
+    clientSecret: `${process.env.SPOTIFY_CLIENT_SECRET}`
+  })
+  spotifyApi.authorizationCodeGrant(code).then(data => {
+    res.json({
+      accessToken: data.body.access_token,
+      refreshToken: data.body.refresh_token,
+      expiresIn: data.body.expires_in
+    })
+  }).catch(() => {
+    console.log(err);
+    res.sendStatus(400);
+  })
+  })
 
-  res.redirect('https://accounts.spotify.com/authorize?' +
-  querystring.stringify({
-    response_type: 'code',
-    client_id: `${process.env.SPOTIFY_CLIENT_ID}`,
-    scope: scope,
-    redirect_uri: 'http://localhost:3000/api/auth/callback',
-    state: state
-  }));
+router.post('/refresh', (req, res) => {
+  const refreshToken = req.body.refreshToken
+  const spotifyApi = new SpotifyWebApi({
+    redirectUri: 'http://localhost:3000',
+    clientId: `${process.env.SPOTIFY_CLIENT_ID}`,
+    clientSecret: `${process.env.SPOTIFY_CLIENT_SECRET}`,
+    refreshToken
+  })
+
+  spotifyApi
+    .refreshAccessToken()
+    .then((data) => {
+      res.json({
+        accessToken: data.body.accessToken,
+        expiresIn: data.body.expiresIn,
+      })
+      console.log(data.body)
+      // console.log('The access token has been refreshed!');
+
+      // // Save the access token so that it's used in future calls
+      // spotifyApi.setAccessToken(data.body['access_token']);
+    }).catch(() => {
+      res.sendStatus(400)
+    });
 });
+//   const state = generateRandomString(16);
+//   const scope = 'user-read-private';
+//   console.log ('router.get/auth let the request begin');
+
+//   res.redirect('https://accounts.spotify.com/authorize?' +
+//   querystring.stringify({
+//     response_type: 'code',
+//     client_id: `${process.env.SPOTIFY_CLIENT_ID}`,
+//     scope: scope,
+//     redirect_uri: 'http://localhost:3000/api/auth/callback',
+//     state: state
+//   }));
+// });
 
 router.get("/auth/callback", (req, res) => {
   //send fetch request with username and password
