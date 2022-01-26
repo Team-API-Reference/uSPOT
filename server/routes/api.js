@@ -10,7 +10,14 @@ router.get("/", (req, res) => {
     return res.status(200).json("Endpoint reached");
   });
 
-  router.post("/addEntry", 
+  router.get("/getAllEntries", 
+  recordController.authorizeSession,
+  recordController.getrecords,
+  (req, res) => {
+    return res.status(200).json(res.locals.records);
+  });
+
+router.post("/addEntry", 
   //call controller here: 
   recordController.authorizeSession,
   recordController.postrecords,
