@@ -12,8 +12,8 @@ const AUTH_URL = 'https://accounts.spotify.com/authorize?client_id=84ccd7f3332a4
 // import spotify.util as util;
 
 const spotifyApi = new SpotifyWebApi({
-    clientId: `84ccd7f3332a4675a5b760699a2bf2e4`
-    // clientId: `${process.env.SPOTIFY_CLIENT_ID}`
+    // clientId: `84ccd7f3332a4675a5b760699a2bf2e4`
+    clientId: `${process.env.SPOTIFY_CLIENT_ID}`
 })
 
 
