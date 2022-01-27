@@ -20,7 +20,6 @@ const spotifyApi = new SpotifyWebApi({
 export default function YoutubeUrl({ code }) {
 
 
-    console.log (code)
     let searchresults = [];
     const [feedback, setFeedback] = useState('');
     const [search, setSearch] = useState('');
@@ -28,7 +27,6 @@ export default function YoutubeUrl({ code }) {
     const [saveyoutubeurl, setYoutubeURL] = useState('');
     const [username, setUsername] = useState('');
     const accessToken = useAuth(code);
-    // console.log('access token is ', accessToken);
     useEffect(() => {
         if(!accessToken) return
         spotifyApi.setAccessToken(accessToken)
@@ -86,8 +84,6 @@ export default function YoutubeUrl({ code }) {
           })
           .then((response) => response.json())
           .then((data) => {
-            console.log(JSON.stringify(data));
-              console.log(JSON.stringify(data[type+"s"]));
               data[type+"s"].items.forEach(element => {
                 searchresults.push({ name: element.name, spotify_id: element.id })
               })
@@ -114,12 +110,12 @@ export default function YoutubeUrl({ code }) {
         <div>
             <div className="flex-container">
             <form className="flex-form" action='http://localhost:3000/api/addEntry' method="POST">
-                <input id = 'youtubeurl' onChange={(event)=>{console.log('youtube url is: ',event.target.value);setYoutubeURL(event.target.value)}} placeholder='put Youtube URL here...'></input>
-                <input id = 'spotifysearch' onChange={(event)=>{console.log('search values are: ',event.target.value);setSearch(event.target.value)}} placeholder="song info"></input>
-                <input id = 'spotifyid' onChange={(event)=>{console.log('input id values are: ',event.target.value);setSpotifyID(event.target.value)}} placeholder="spotify id"></input>
+                <input id = 'youtubeurl' onChange={(event)=>{setYoutubeURL(event.target.value)}} placeholder='put Youtube URL here...'></input>
+                <input id = 'spotifysearch' onChange={(event)=>{setSearch(event.target.value)}} placeholder="song info"></input>
+                <input id = 'spotifyid' onChange={(event)=>{setSpotifyID(event.target.value)}} placeholder="spotify id"></input>
             </form>
             <button id='youTubeURLButton' onClick={saveData}>Save URL to DB</button>
-            <button id='spotifyLikeButton' onClick={()=>{console.log('clicked search');getSpotifySearch(search)}}>Find on Spotify</button>
+            <button id='spotifyLikeButton' onClick={()=>{getSpotifySearch(search)}}>Find on Spotify</button>
             <button id='spotifyButton' onClick={()=>getSpotifySearch(search)}>Like Song on Spotify</button>
             <UserLogin setFeedback = {setFeedback} />
             <a href={AUTH_URL}>Connect to Spotify</a>
