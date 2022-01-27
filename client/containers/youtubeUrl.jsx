@@ -26,12 +26,25 @@ export default function YoutubeUrl({ code }) {
     const [savespotifyid, setSpotifyID] = useState('');
     const [saveyoutubeurl, setYoutubeURL] = useState('');
     const [username, setUsername] = useState('');
+    const [cachedToken, setCachedToken] = useState('');
+    
     const accessToken = useAuth(code);
     useEffect(() => {
         if(!accessToken) return
         spotifyApi.setAccessToken(accessToken)
     }, [accessToken]);
    
+    
+    //connect automatically?
+    // useEffect(() => {
+    // fetch(AUTH_URL, {
+    //     method: 'GET',
+    //     header: {
+    //         "Access-Control-Allow-Origin": true
+    //     }
+    //   })
+    // },[]);
+    // window.location(AUTH_URL)
 
     function retrieveData() {
         fetch('http://localhost:3000/api/getAllEntries', {
@@ -60,6 +73,11 @@ export default function YoutubeUrl({ code }) {
 
     //search parameters in the input box for a track in spotify
     function getSpotifySearch(input) {
+        let currentToken = accessToken
+        if (!accessToken){
+            currentToken = cachedToken;
+        }
+        console.log(currentToken);
         let type='album';
         let typeOptions = prompt("Please choose one of the following: album, artist, playlist, track");
         switch(typeOptions) {
@@ -79,7 +97,7 @@ export default function YoutubeUrl({ code }) {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': 'Bearer '+accessToken
+                'Authorization': 'Bearer '+currentToken
             },
           })
           .then((response) => response.json())
@@ -89,16 +107,18 @@ export default function YoutubeUrl({ code }) {
               })
               setFeedback(JSON.stringify(searchresults));
             })
-          .catch((err) => {console.log(err);setFeedback('Error: Invalid credentials')});
+          .catch((err) => {console.log(err, data);setFeedback('Error: Invalid credentials')});
     }
 
     //add track with spotify ID entered into 'spotifyid' to a track on spotify
     function addTrackOnSpotify() {
+        let currentToken = accessToken || cachedToken;
+        console.log(currentToken);
         fetch('spotify', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': 'Bearer '+accessToken
+                'Authorization': 'Bearer '+currentToken
             },
           })
           .then((response) => response.json())
@@ -117,7 +137,7 @@ export default function YoutubeUrl({ code }) {
             <button id='youTubeURLButton' onClick={saveData}>Save URL to DB</button>
             <button id='spotifyLikeButton' onClick={()=>{getSpotifySearch(search)}}>Find on Spotify</button>
             <button id='spotifyButton' onClick={()=>getSpotifySearch(search)}>Like Song on Spotify</button>
-            <UserLogin setFeedback = {setFeedback} />
+            <UserLogin setFeedback = {setFeedback} setCachedToken = {setCachedToken} />
             <a href={AUTH_URL}>Connect to Spotify</a>
             <button onClick = {retrieveData}>Retrieve saved songs...</button>
             <div id='feedback'>

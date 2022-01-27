@@ -51,6 +51,7 @@ export default function UserLogin(props) {
 
     return (
         <div>
+            <input type="password" placeholder='Access Token' id="cachedtoken" onChange= {(event) => {props.setCachedToken(event.target.value) }}></input>
             <input type="text" placeholder='Username' id="username" onChange= {(event) => {setUsername(event.target.value) }}></input>
             <input type="password" placeholder='Password' id="password" onChange={(event) => {setPassword(event.target.value) }}></input>
             <button onClick={() => { handleSubmit(username, password) }}>Login</button>
