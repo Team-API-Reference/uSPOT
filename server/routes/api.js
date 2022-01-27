@@ -10,7 +10,7 @@ const router = new express.Router();
 
 router.post("/auth", (req, res) => {
   const code = req.body.code;
-  console.log('working')
+  // console.log('working')
   const spotifyApi = new SpotifyWebApi({
     redirectUri: 'http://localhost:8080',
     clientId: `${process.env.SPOTIFY_CLIENT_ID}`,
@@ -44,7 +44,7 @@ router.post('/refresh', (req, res) => {
         accessToken: data.body.accessToken,
         expiresIn: data.body.expiresIn,
       })
-      console.log(data.body)
+    //   console.log(data.body)
       // console.log('The access token has been refreshed!');
 
       // // Save the access token so that it's used in future calls
@@ -69,7 +69,7 @@ router.post('/refresh', (req, res) => {
 
 router.get("/auth/callback", (req, res) => {
   //send fetch request with username and password
-  console.log('endpoint reached');
+  // console.log('endpoint reached');
   let code = req.query.code || null;
   let state = req.query.state || null;
 
@@ -122,7 +122,6 @@ router.get("/", (req, res) => {
   });
 
   router.get("/getAllEntries", 
-//   recordController.authorizeSession,
   recordController.getrecords,
   (req, res) => {
     return res.status(200).json(res.locals.records);
@@ -130,26 +129,7 @@ router.get("/", (req, res) => {
 
 router.post("/addEntry", 
   //call controller here: 
-//   recordController.authorizeSession,
   recordController.postrecords,
-  (req, res) => {
-  return res.status(200).json();
-});
-
-// don't need
-router.put("/updateEntry", 
-  //call controller here: UNIMPLEMENTED
-  recordController.authorizeSessionForrecord,
-  recordController.updaterecord,
-  (req, res) => {
-  return res.status(200).json();
-});
-
-// don't need
-router.delete("/deleteEntry", 
-  //call controller here
-  recordController.authorizeSessionForrecord,
-  recordController.deleterecord,
   (req, res) => {
   return res.status(200).json();
 });
