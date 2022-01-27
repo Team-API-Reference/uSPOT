@@ -7,7 +7,6 @@ const process = require('process');
 const code = new URLSearchParams(window.location.search).get('code')
 
 const App = () => {
-  console.log (code);
   if (code){
     return (
       <div> 

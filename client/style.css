@@ -13,12 +13,15 @@ body {
     flex-direction: column;
     box-sizing: border-box;
     min-height: 100vh;
-    background-color: rgb(107, 169, 226);
+    background-color: rgb(111, 160, 216);
 }
 
 h1 {
+    align-items: center !important;
+    align-content: center !important;
     font-family: Gill Sans;
-    color:rgb(192, 192, 17) !important;
+    font-size: 10vh;
+    color:rgb(18, 247, 235) !important;
 }
 
 .flex-container {
@@ -26,7 +29,7 @@ h1 {
     align-items: center;
     flex-direction: column;
     box-sizing: border-box;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     /* min-height: 100vh; */
     /* background-color: rgb(107, 169, 226); */
 }
@@ -37,7 +40,7 @@ h1 {
     display: flex;
     justify-content: center;
     align-items: center;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     align-content: center;
     flex-direction: row;
     margin: 10px;

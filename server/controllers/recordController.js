@@ -5,16 +5,11 @@ const recordController = {};
 
 //done
 recordController.getrecords = (req, res, next) => {
-  console.log('We are in the get records controller');
   const text = `
     SELECT * FROM records
     INNER JOIN users ON records.username = users.username
   ;`;
-//   const text = `
-//   SELECT * FROM records
-//   INNER JOIN users ON records.username = users.username
-//   ORDER BY records.id ASC
-// ;`;
+
   db.query(text)
     .then((response) => {
       res.locals.records = response.rows.map((entry) => {
@@ -35,48 +30,12 @@ recordController.getrecords = (req, res, next) => {
 
 //done
 recordController.postrecords = (req, res, next) => {
-  console.log('We are in the post records controller');
   const text = `INSERT into records (youtubeurl, spotifyid, username) VALUES($1, $2, $3);`;
   const values = [
     req.body.youtubeurl,
     req.body.spotifyid,
     req.body.username,
   ];
-
-  db.query(text, values)
-    .then((response) => {
-      next();
-    })
-    .catch((err) => {
-      console.error(err);
-      next(err);
-    });
-};
-
-//don't need this
-recordController.updaterecord = (req, res, next) => {
-  console.log('We are in the update record controller');
-  console.log(req.body);
-  const text = `UPDATE records SET content=$1, edit=$2 WHERE id=$3;`; //needs to be update
-  const creation_date = new Date().toLocaleString();
-  const values = [req.body.content, creation_date, req.params.record_id];
-
-  db.query(text, values)
-    .then((response) => {
-      res.locals.updatedrecord = response.rows;
-      next();
-    })
-    .catch((err) => {
-      console.error(err);
-      next(err);
-    });
-};
-
-//don't use this
-recordController.deleterecord = (req, res, next) => {
-  console.log('We are in the delete record controller');
-  const text = `DELETE FROM records WHERE id=$1;`;
-  const values = [req.params.record_id];
 
   db.query(text, values)
     .then((response) => {
@@ -160,30 +119,5 @@ recordController.authorizeSessionForrecord = (req, res, next) => {
       next(err);
     });
 };
-
- recordController.triggerAPI = (req, res, next) => {
-   
- };
-
-async function findSongs(token, search_query) {
-
-  let result = await api.request({
-      method: "get",
-      url: "https://api.spotify.com/v1/search",
-      headers: { 'Authorization': 'Bearer ' + token },
-      params: { 'q': search_query, 'type': 'track' }
-  }).catch(async function handleError(err) {
-      console.log(err)
-      let refreshed_token = await refreshToken(username)
-      let result_new = await findSongs(username, refreshed_token, search_query)
-      console.log(result_new)
-      setFeedback(result_new);
-      return result_new.data.tracks
-
-  })
-  return result.data.tracks
-
-}
-
 
 module.exports = recordController;
