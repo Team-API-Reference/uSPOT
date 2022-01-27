@@ -1,0 +1,73 @@
+{
+  "name": "arp",
+  "version": "1.0.0",
+  "description": "API Reference Product",
+  "main": "index.js",
+  "scripts": {
+    "start": "cross-env NODE_ENV=production node server/server.js",
+    "build": "cross-env NODE_ENV=production webpack",
+    "dev": "concurrently \"cross-env NODE_ENV=development webpack serve\" \"cross-env NODE_ENV=development node server/server.js\"",
+    "test": "jest --verbose"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Team-API-Reference/ARP.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Team-API-Reference/ARP/issues"
+  },
+  "homepage": "https://github.com/Team-API-Reference/ARP#readme",
+  "dependencies": {
+    "@emotion/react": "^11.7.0",
+    "@emotion/styled": "^11.6.0",
+    "@mui/material": "^5.2.3",
+    "@testing-library/react": "^11.2.5",
+    "@wojtekmaj/enzyme-adapter-react-17": "^0.4.1",
+    "axios": "^0.25.0",
+    "bcrypt": "^5.0.1",
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.19.1",
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
+    "dateformat": "^5.0.2",
+    "dotenv": "^10.0.0",
+    "dotenv-webpack": "^7.0.3",
+    "express": "^4.17.1",
+    "fs": "^0.0.1-security",
+    "jest": "^27.4.7",
+    "node": "^17.4.0",
+    "node-fetch": "^2.6.6",
+    "os": "^0.1.2",
+    "path": "^0.12.7",
+    "pg": "^8.7.1",
+    "process": "^0.11.10",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "spotify-web-api-node": "^5.0.2",
+    "supertest": "^6.2.2",
+    "uuid": "^8.3.2"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.16.0",
+    "@babel/preset-env": "^7.16.4",
+    "@babel/preset-react": "^7.16.0",
+    "babel-loader": "^8.2.3",
+    "concurrently": "^6.4.0",
+    "cross-env": "^7.0.3",
+    "css-loader": "^6.5.1",
+    "enzyme": "^3.11.0",
+    "html-webpack-plugin": "^5.5.0",
+    "mini-css-extract-plugin": "^2.4.5",
+    "nodemon": "^2.0.15",
+    "react-router": "^6.0.2",
+    "sass": "^1.44.0",
+    "sass-loader": "^12.3.0",
+    "style-loader": "^3.3.1",
+    "webpack": "^5.64.4",
+    "webpack-cli": "^4.9.1",
+    "webpack-dev-server": "^4.7.2"
+  }
+}
