@@ -10,14 +10,14 @@ const App = () => {
   if (code){
     return (
       <div> 
-      <h1>Uspot: The Music Tracking App</h1>
+      <h1>uSpot: The Music Tracking App</h1>
       <YoutubeUrl code = {code}/>
       </div>
     );
   } else {
     return (
       <div> 
-      <h1>Uspot: The Music Tracking App</h1>
+      <h1>uSpot: The Music Tracking App</h1>
       <YoutubeUrl />
       </div>
     );
