@@ -23,7 +23,7 @@ router.post("/auth", (req, res) => {
       expiresIn: data.body.expires_in
     })
   }).catch((err) => {
-    console.log(err);
+    // console.log(err);
     res.sendStatus(400);
   })
   })

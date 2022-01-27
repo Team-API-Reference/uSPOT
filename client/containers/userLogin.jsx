@@ -12,16 +12,20 @@ export default function UserLogin(props) {
           body: JSON.stringify({ username: username, password: password}),
           headers: { 'Content-Type': 'application/json' },
         })
-        .then((data) => {console.log(data);})
+        // .then((data) => {console.log(data);})
         .then((data) => {
           if (data.status - 200 > 50) {
             props.setFeedback('Login Failure: Invalid credentials') 
+            alert('Login Failure: Invalid credentials');
           }
             else {
               props.setFeedback('Login successful!')
+              alert('Login successful');
             }
         })
-        .catch((err) => {console.log(err);setFeedback('Error: Invalid credentials')});
+        .catch((err) => {console.log(err);
+          props.setFeedback('Error: Invalid credentials')
+        });
       }
 
       function handleSignup(username, password){
@@ -40,7 +44,9 @@ export default function UserLogin(props) {
               props.setFeedback('Account successfully created! :)')
             }
         })
-        .catch((err) => {console.log(err);setFeedback('Error: Invalid credentials')});
+        .catch((err) => {console.log(err);
+          props.setFeedback('Error: Invalid credentials')
+        });
       }
 
     return (

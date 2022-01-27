@@ -11,7 +11,7 @@ import SpotifyWebApi from 'spotify-web-api-node';
 // const AUTH_URL = 'https://accounts.spotify.com/authorize?client_id=84ccd7f3332a4675a5b760699a2bf2e4&response_type=code&redirect_uri=http://localhost:8080&scope=playlist-read-private%20playlist-modify-public%20playlist-modify-private%20user-library-read%20user-library-modify';
 // import spotify.util as util;
 const AUTH_URL = 'https://accounts.spotify.com/authorize?client_id=84ccd7f3332a4675a5b760699a2bf2e4&response_type=code&redirect_uri=http://localhost:8080&scope=playlist-read-private%20playlist-modify-public%20playlist-modify-private%20user-library-read%20user-library-modify';
-console.log('auth is ',AUTH_URL);
+// console.log('auth is ',AUTH_URL);
 const spotifyApi = new SpotifyWebApi({
     clientId: `84ccd7f3332a4675a5b760699a2bf2e4`
 })
@@ -21,11 +21,14 @@ export default function YoutubeUrl({ code }) {
 
 
     console.log (code)
+    let searchresults = [];
     const [feedback, setFeedback] = useState('');
     const [search, setSearch] = useState('');
     const [savespotifyid, setSpotifyID] = useState('');
+    const [saveyoutubeurl, setYoutubeURL] = useState('');
+    const [username, setUsername] = useState('');
     const accessToken = useAuth(code);
-    console.log('access token is ', accessToken);
+    // console.log('access token is ', accessToken);
     useEffect(() => {
         if(!accessToken) return
         spotifyApi.setAccessToken(accessToken)
@@ -42,9 +45,39 @@ export default function YoutubeUrl({ code }) {
           .catch((err) => {console.log(err);setFeedback('Error: Invalid credentials')});
     }
 
+    function saveData() {
+        setUsername('test');
+        fetch('http://localhost:3000/api/addEntry', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                youtubeurl: saveyoutubeurl,
+                spotifyid: savespotifyid,
+                username: 'test',
+            })
+          })
+          .then((data) => {setFeedback('Record saved!')})
+          .catch((err) => {console.log(err);setFeedback('Error: Invalid credentials')});
+    }
+
     //search parameters in the input box for a track in spotify
     function getSpotifySearch(input) {
-        fetch(`https://api.spotify.com/v1/search?query=name%3A${input}&type=album&offset=0&limit=20`, {
+        let type='album';
+        let typeOptions = prompt("Please choose one of the following: album, artist, playlist, track");
+        switch(typeOptions) {
+            case "album":
+                type = "album";
+            break;
+            case "artist":
+                type = "artist";
+            break;
+            case "playlist":
+                type = "playlist";
+            break;
+            case "track":
+                type = "track";
+        }
+        fetch(`https://api.spotify.com/v1/search?query=${input}&type=${type}&offset=0&limit=20`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -52,7 +85,14 @@ export default function YoutubeUrl({ code }) {
             },
           })
           .then((response) => response.json())
-          .then((data) => {console.log(data);setFeedback(JSON.stringify(data))})
+          .then((data) => {
+            console.log(JSON.stringify(data));
+              console.log(JSON.stringify(data[type+"s"]));
+              data[type+"s"].items.forEach(element => {
+                searchresults.push({ name: element.name, spotify_id: element.id })
+              })
+              setFeedback(JSON.stringify(searchresults));
+            })
           .catch((err) => {console.log(err);setFeedback('Error: Invalid credentials')});
     }
 
@@ -60,7 +100,10 @@ export default function YoutubeUrl({ code }) {
     function addTrackOnSpotify() {
         fetch('spotify', {
             method: 'GET',
-            headers: { 'Content-Type': 'application/json' },
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer '+accessToken
+            },
           })
           .then((response) => response.json())
           .then((data) => {setFeedback(JSON.stringify(data))})
@@ -70,13 +113,13 @@ export default function YoutubeUrl({ code }) {
     return (
         <div>
             <div className="flex-container">
-            <form className="flex-form" action='api/addEntry' method="POST">
-                <input id = 'youtubeurl' placeholder='put Youtube URL here...'></input>
-                <button id='youTubeURLButton'>Save URL to DB</button>
+            <form className="flex-form" action='http://localhost:3000/api/addEntry' method="POST">
+                <input id = 'youtubeurl' onChange={(event)=>{console.log('youtube url is: ',event.target.value);setYoutubeURL(event.target.value)}} placeholder='put Youtube URL here...'></input>
                 <input id = 'spotifysearch' onChange={(event)=>{console.log('search values are: ',event.target.value);setSearch(event.target.value)}} placeholder="song info"></input>
                 <input id = 'spotifyid' onChange={(event)=>{console.log('input id values are: ',event.target.value);setSpotifyID(event.target.value)}} placeholder="spotify id"></input>
             </form>
-            <button id='spotifyLikeButton' onClick={()=>{console.log('clicked search');getSpotifySearch(search)}}>Find Song ID on Spotify</button>
+            <button id='youTubeURLButton' onClick={saveData}>Save URL to DB</button>
+            <button id='spotifyLikeButton' onClick={()=>{console.log('clicked search');getSpotifySearch(search)}}>Find on Spotify</button>
             <button id='spotifyButton' onClick={()=>getSpotifySearch(search)}>Like Song on Spotify</button>
             <UserLogin setFeedback = {setFeedback} />
             <a href={AUTH_URL}>Connect to Spotify</a>
